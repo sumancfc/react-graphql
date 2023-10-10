@@ -1,6 +1,6 @@
 import React from "react";
-import Link from "./Link";
 import { useQuery, gql } from "@apollo/client";
+import LinkItem from "./LinkItem";
 
 const FEED_QUERY = gql`
   {
@@ -24,7 +24,7 @@ const LinkList = () => {
       {data && (
         <>
           {data.feed.links.map((link) => (
-            <Link key={link.id} link={link} />
+            <LinkItem key={link.id} link={link} />
           ))}
         </>
       )}
