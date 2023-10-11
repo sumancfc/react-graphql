@@ -1,80 +1,92 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AUTH_TOKEN } from "../constants";
 
 const Header = () => {
-  return (
-    <nav
-      className='relative flex w-full flex-nowrap items-center justify-between bg-[#2d1193] py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:flex-wrap lg:justify-start lg:py-4'
-      data-te-navbar-ref
-    >
-      <div className='flex w-full flex-wrap items-center justify-between px-3'>
-        <div className='ml-2'>
-          <Link
-            className='text-xl text-neutral-800 dark:text-neutral-200'
-            to='/'
-          >
-            React-GraphQL
-          </Link>
-        </div>
+  const navigate = useNavigate();
+  const authToken = localStorage.getItem(AUTH_TOKEN);
 
-        <button
-          className='block border-0 bg-transparent px-2 text-neutral-500 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden'
-          type='button'
-          data-te-collapse-init
-          data-te-target='#navbarSupportedContent2'
-          aria-controls='navbarSupportedContent2'
-          aria-expanded='false'
-          aria-label='Toggle navigation'
+  return (
+    <nav className='bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600'>
+      <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
+        <Link
+          to='https://www.howtographql.com/react-apollo/0-introduction/'
+          className='flex items-center'
         >
-          <span className='[&>svg]:w-7'>
+          <img
+            src='https://flowbite.com/docs/images/logo.svg'
+            className='h-8 mr-3'
+            alt='Flowbite Logo'
+          />
+          <span className='self-center text-2xl font-semibold whitespace-nowrap dark:text-white'>
+            React GraphQL
+          </span>
+        </Link>
+        <div className='flex md:order-2'>
+          {authToken ? (
+            <button
+              type='button'
+              className='focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2'
+              onClick={() => {
+                localStorage.removeItem(AUTH_TOKEN);
+                navigate("/");
+              }}
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              to='/login'
+              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+            >
+              Login
+            </Link>
+          )}
+          <button
+            data-collapse-toggle='navbar-sticky'
+            type='button'
+            className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+            aria-controls='navbar-sticky'
+            aria-expanded='false'
+          >
+            <span className='sr-only'>Open main menu</span>
             <svg
+              className='w-5 h-5'
+              aria-hidden='true'
               xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 24 24'
-              fillRule='currentColor'
-              className='h-7 w-7'
+              fill='none'
+              viewBox='0 0 17 14'
             >
               <path
-                fillRule='evenodd'
-                d='M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z'
-                clipRule='evenodd'
+                stroke='currentColor'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth='2'
+                d='M1 1h15M1 7h15M1 13h15'
               />
             </svg>
-          </span>
-        </button>
-
+          </button>
+        </div>
         <div
-          className='!visible mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto'
-          id='navbarSupportedContent2'
-          data-te-collapse-item
+          className='items-center justify-between hidden w-full md:flex md:w-auto md:order-1'
+          id='navbar-sticky'
         >
-          <ul
-            className='list-style-none mr-auto flex flex-col pl-0 lg:mt-1 lg:flex-row'
-            data-te-navbar-nav-ref
-          >
-            <li
-              className='my-4 pl-2 lg:my-0 lg:pl-2 lg:pr-1'
-              data-te-nav-item-ref
-            >
+          <ul className='flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700'>
+            <li>
               <Link
-                className='active disabled:text-black/30 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400'
-                aria-current='page'
                 to='/'
-                data-te-nav-link-ref
+                className='block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500'
+                aria-current='page'
               >
-                Links
+                Home
               </Link>
             </li>
-
-            <li
-              className='mb-4 pl-2 lg:mb-0 lg:pl-0 lg:pr-1'
-              data-te-nav-item-ref
-            >
+            <li>
               <Link
-                className='active disabled:text-black/30 lg:px-2 [&.active]:text-black/90 dark:[&.active]:text-neutral-400'
                 to='/create'
-                data-te-nav-link-ref
+                className='block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700'
               >
-                Create Post
+                Create
               </Link>
             </li>
           </ul>
